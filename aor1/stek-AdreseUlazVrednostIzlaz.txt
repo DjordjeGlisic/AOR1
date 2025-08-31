@@ -1,0 +1,56 @@
+.386
+.model flat,c
+.data
+	niz db 1,2,3,4,5
+	n dword 5
+	sum dword ?
+	;izgled memorije
+	;01 02 03 04 05 05 ?? ??   
+.stack 4096
+.code
+	sumiraj proc
+		push ebp
+		mov ebp,esp
+		push eax
+		push ebx
+		push ecx
+		push edx
+		push esi
+		pushfd
+		mov edx,0;sum=0
+		mov esi,[ebp+8];adresa gde se nalazi n
+		mov ecx,[esi];vrednost na adresi gde se nalazi n
+		mov ebx,0
+		mov bl,cl;n=5
+		mov eax,0;int i=0
+		mov esi,[ebp+12];niz
+		petlja:
+		add dl,[esi+eax]
+		adc dh,0
+		inc eax;i++
+		loop petlja
+		mov [ebp+16],edx
+		popfd
+		pop esi
+		pop edx
+		pop ecx
+		pop ebx
+		pop eax
+		pop ebp
+		
+
+	
+		ret 8
+	sumiraj endp
+
+	main proc
+		push sum
+		push offset niz
+		lea eax,n
+		push eax
+		call sumiraj
+		pop eax
+		
+		ret
+	main endp
+	end main

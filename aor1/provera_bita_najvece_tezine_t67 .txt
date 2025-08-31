@@ -1,0 +1,11 @@
+; u bitu najvece tezine proveriti da li je upisan 1?
+; registar sa n cifara se proverava tako sto mu se za svaku cifru prosledi 0
+; osim za cifru najvece tezine gde mu se prosledi 1000->8
+;ako se nakon and operacije nalazi broj 8 0nputa h tada jeste jedinica na bitu najvece tezine
+;inace nije
+mov al,0x79
+and al,80h
+mov al,0x99
+and al,80h
+mov eax,0xa357922f
+and eax,80000000h

@@ -1,0 +1,48 @@
+.386
+.model flat,c
+.data
+	mat byte 1,8,7
+		byte 2,11,9
+		byte 3,4,10
+		byte 5,6,12
+	n dword 3
+	m dword 4
+	sume dw 3 DUP(0)
+.stack 4096
+.code
+main proc
+	mov eax,0
+	mov ebx,0
+	mov esi,0
+	mov edx,0
+	;racaunaje (m-1)*n
+	mov al,byte ptr n
+	mov bl,byte ptr m
+	dec bl
+	mul bl
+	mov dx,ax
+	;(m-1)*n se nalazi u edx
+	mov eax,0
+	mov ebx,0
+	
+	mov ecx,n
+	mov edi,0
+	petlja:
+		mov sume[edi],0
+		mov ebx,0
+		wile:
+			cmp ebx,edx
+			ja van
+			mov eax,0
+			mov al,mat[ebx][esi]
+			add sume[edi],ax
+			add ebx,n
+		
+		jmp wile
+	van:
+	inc esi
+	add edi,2
+	loop petlja
+
+main endp
+end main

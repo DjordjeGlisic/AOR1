@@ -1,0 +1,23 @@
+;da li je u al malo veliko slovo ili broj
+mov al,0x327
+cmp al,0x61
+jl proveriVelika
+cmp al,0x7a
+jg proveriVelika
+jmp mala
+mala:
+mov cx,1
+jmp kraj
+proveriVelika:
+cmp al,0x41
+jl brojevi
+cmp al,0x5a
+jg brojevi
+jmp velika
+velika:
+mov cx,2
+jmp kraj
+brojevi:
+mov cx,0
+kraj:
+mov ax,cx

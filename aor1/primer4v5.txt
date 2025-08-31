@@ -1,0 +1,16 @@
+mov eax,z
+neg eax
+mov bx,p
+idiv bx
+mov pom1,ax
+mov eax,0
+mov eax,y
+mov ecx,0
+mov ecx,5
+neg ecx
+imul ecx
+;edx:eax
+;(edx:eax)-64 bit/pom1-16 bit
+movsx ebx,pom1
+
+idiv ebx

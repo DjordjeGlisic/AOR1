@@ -1,0 +1,8 @@
+;primer maske za selektivno propustanje cifara iz registra
+;f-propusta,0-ne propusta(pise se 0 u rezultatu)
+mov bx,0abcdh
+mov ax,0ff00h
+and bx,ax
+;primer brisanja bitova na parnim/neparnim pozocijama
+mov eax,01a2b3c4dh
+and eax,00f0f0f0fh

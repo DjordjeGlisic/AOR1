@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BLANKET-JUNSKI-2023-ZAD1", "BLANKET-JUNSKI-2023-ZAD1.vcxproj", "{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}.Debug|x64.ActiveCfg = Debug|x64
+		{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}.Debug|x64.Build.0 = Debug|x64
+		{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}.Debug|x86.ActiveCfg = Debug|Win32
+		{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}.Debug|x86.Build.0 = Debug|Win32
+		{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}.Release|x64.ActiveCfg = Release|x64
+		{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}.Release|x64.Build.0 = Release|x64
+		{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}.Release|x86.ActiveCfg = Release|Win32
+		{B31FC18D-CCE1-440F-B7BF-ECDD90BB3FD5}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F69C97D8-D550-450C-8BCF-2F28614D30CF}
+	EndGlobalSection
+EndGlobal

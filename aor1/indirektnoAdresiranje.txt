@@ -1,0 +1,17 @@
+.386
+.model flat,c
+.data
+	n word 234h,3
+	m db 5
+	q dword 12345678h
+.code
+main proc
+	mov ax, word ptr m
+	mov eax, dword ptr n+1
+	lea ebx,n
+	mov al,[ebx]
+	mov [ebx],ax
+	mov byte ptr [ebx],1
+	ret
+main endp
+end main

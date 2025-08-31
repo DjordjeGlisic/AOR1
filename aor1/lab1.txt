@@ -1,0 +1,67 @@
+;operacija x+b-c bez ikakvog prenosa
+;ovaj primer je jednostavan ali pokazuje da prilikom oduzimanja 
+;broj s leve strane mora biti veci od broja sa desne i da redosled sabiranja oduzimanja nije bitan
+;kao i da ako zbir dve cifre prilikom sabiranja brojeva nije veci od 16 taj broj ne utice na druge brojeve
+mov eax,0xa347a1
+mov ebx,0
+mov bl,0x3a
+mov cx,0x002a
+add ax,bx
+adc eax,0
+sub ax,cx
+sbb eax,0
+;operacija x+b-c sa izlaznim prenosom
+;ovaj primer pokazuje da kada zbir najvecih cifara dva broja jeste veci od 15 javlja se izlazni prenos
+;koji se nalazi u carry flagu imamo liniju add al,bl koja se fokusira na sabiranje dvocifrenih
+;hexa brojeva ako bi radili sa 16bit registrima dx,bx izlazni prenos se ne bi javio vec bi 1 bio
+;zapisan kao poslednja cifra dh registra
+mov eax,0
+mov ebx,0
+mov ecx,0
+mov ebx,0
+mov edx,0
+mov ax,0xffff
+mov dl,0xfc
+mov bx,0x00ff
+mov cl,11h
+sub bx,cx
+add dl,bl
+adc eax,0
+;ima medju prenos
+;ovaj primer pokazuje da prilikom sabiranja dva broja moze da cifra rezultata generise prenos koji utice na narednu
+;cifru medjutim ako nakon generisanja naredne cifre ukljucivanjem prenosa sa prethodne se prenos na narednu
+;ne generise cf nece biti setovan.tj rezultat ne mora imati izlazni prenos ako ima medju prenos
+mov eax,0
+mov ebx,0
+mov ecx,0
+mov eax,0xfff0ff
+mov bl,0xff
+mov cx,0x00aa
+add ax,bx
+sbb ax,cx
+
+;medjurezultat jednak nuli,ukoliko imamo da je rez operacije nula zf ce se setovati;
+;i ostatak aritmetike nece promeniti ostale registre
+mov eax,0
+mov ebx,0
+mov ecx,0
+mov bl,0xff
+mov cx,0x00ff
+sub bx,cx
+mov eax,0xffafcf
+adc ax,bx
+;kada rezultat izraza nije tacan
+; kada se oduzima manji od veceg broja asembler radi sa obelezenim brojevima i generisace negativan broj umesto
+;njegove apsolutne vrednosti sto ce usloviti ostatak aritmetike da da netacan rezultat
+mov eax,0
+mov ebx,0
+mov ecx,0
+mov eax,0xfaceaf
+mov bl,0x03
+mov cx,0x0008
+;ovde je greska jer treba da se dobije broj  5 a ne minus 5
+mov dx,-5
+sub bx,cx
+add ax,bx
+
+

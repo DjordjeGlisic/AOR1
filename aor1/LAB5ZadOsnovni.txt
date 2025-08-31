@@ -1,0 +1,115 @@
+.386
+.model flat,c
+.data
+	niz db 10 DUP(0)
+	n db 10
+	rez db 0
+	;promenljive za inicijalizacuju niza
+	a dword 0fa3b9ca1h
+	b dword 03345aefah
+	z dw 0fa11h
+
+.stack 4996
+.code
+trazi proc
+	push ebp
+	mov ebp,esp
+	pushfd
+	push eax
+	push ebx
+	push ecx
+	push edx
+	push esi
+	push edi
+	mov eax,0;int i=0;
+	mov ebx,0
+	mov ebx,[ebp+12];int n=10;
+	mov ecx,ebx
+	mov edi,0;int count=0;
+	mov esi,[ebp+16];niz je u esi
+	mov edx,0
+	mov edx,[ebp+8];podatak koji se trazi je u edx
+	vrti:
+		cmp eax,ebx
+		jae kraj
+		cmp byte ptr [esi+eax],dl
+		jne kont
+		inc edi
+		kont:
+		inc eax
+	loop vrti
+	kraj:
+	mov [ebp+20],edi
+	pop edi
+	pop esi
+	pop edx
+	pop ecx
+	pop ebx
+	pop eax
+	popfd
+	pop ebp
+
+	
+	ret 12
+trazi endp
+inicijalizuj proc
+	push ebp
+	mov ebp,esp
+	push eax
+	push ebx
+	push ecx
+	push edx
+	push edi
+	push esi
+	pushfd
+	mov ecx,0
+	mov cl,[ebp+8];brojac petlje
+	mov ebx,ecx;int n=10;
+	mov eax,0;int i=0;
+	mov esi,[ebp+16]
+	mov edi,[ebp+12]
+	petlja:
+		cmp eax,ebx
+		jae van
+		mov dl,byte ptr [esi+eax]
+		mov byte ptr [edi+eax],dl
+		inc eax;i++;
+	loop petlja
+	van:
+
+	
+	popfd
+	pop esi
+	pop edi
+	pop edx
+	pop ecx
+	pop ebx
+	pop eax
+	pop ebp
+	ret 12
+inicijalizuj endp
+main proc
+	lea eax,a
+	push eax
+	mov eax,offset niz
+	push eax
+	mov eax,0
+	mov al,n
+	push eax
+	call inicijalizuj
+	mov eax,0
+	mov al,rez
+	push eax
+	mov eax,offset niz
+	push eax
+	mov eax,0
+	mov al,n
+	push eax
+	mov ecx,0
+	mov cl,byte ptr z+1
+	push ecx
+	call trazi
+	pop eax;rezultat je u eax
+	ret
+main endp
+end main

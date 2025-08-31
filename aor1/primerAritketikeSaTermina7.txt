@@ -1,0 +1,9 @@
+mov eax,0xfabc78a9
+mov ebx,eax
+add eax,0xabcde
+sub ebx,1
+div ebx
+mov ebx,0xfabc78a9
+sub ebx,0xa123afff
+mov edx,0
+div ebx

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BLNAKET-Oktobar2024Zadatak1", "BLNAKET-Oktobar2024Zadatak1.vcxproj", "{30503BC2-77BD-4D66-B3E8-1D49BAA41255}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30503BC2-77BD-4D66-B3E8-1D49BAA41255}.Debug|x64.ActiveCfg = Debug|x64
+		{30503BC2-77BD-4D66-B3E8-1D49BAA41255}.Debug|x64.Build.0 = Debug|x64
+		{30503BC2-77BD-4D66-B3E8-1D49BAA41255}.Debug|x86.ActiveCfg = Debug|Win32
+		{30503BC2-77BD-4D66-B3E8-1D49BAA41255}.Debug|x86.Build.0 = Debug|Win32
+		{30503BC2-77BD-4D66-B3E8-1D49BAA41255}.Release|x64.ActiveCfg = Release|x64
+		{30503BC2-77BD-4D66-B3E8-1D49BAA41255}.Release|x64.Build.0 = Release|x64
+		{30503BC2-77BD-4D66-B3E8-1D49BAA41255}.Release|x86.ActiveCfg = Release|Win32
+		{30503BC2-77BD-4D66-B3E8-1D49BAA41255}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9945E90F-D287-487E-991F-4BB947C674E5}
+	EndGlobalSection
+EndGlobal

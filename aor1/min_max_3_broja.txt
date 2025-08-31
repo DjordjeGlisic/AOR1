@@ -1,0 +1,30 @@
+;naci minimum i maximum izmedju 3 broja 7,9,44
+mov ax,7
+mov bx,9
+mov cx,44
+mov max,ax
+mov min,ax
+cmp bx,min
+jl tad1
+jge else1
+tad1:
+mov min,bx
+jmp izlaz1
+else1:
+je izlaz1
+mov max,bx
+jmp izlaz1
+izlaz1:
+cmp cx,min
+jl tad2
+jge else2
+tad2:
+mov min,cx
+jmp izlaz2
+else2:
+je izlaz2
+mov max,cx
+izlaz2:
+mov ax,min
+mov bx,max
+

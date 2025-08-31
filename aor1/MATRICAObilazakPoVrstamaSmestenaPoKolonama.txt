@@ -1,0 +1,83 @@
+;od gore na dole
+.386
+.model flat,c
+.data
+	;smestanje kolona->kolona
+	mat byte 1,8,7
+		byte 2,11,9
+		byte 3,4,10
+		byte 5,6,12
+	n dword 3
+	m dword 4
+.stack 4096
+.code
+
+main proc
+
+	mov eax,0
+	mov ebx,0
+	mov edx,0
+	mov esi,0
+	mov ecx,n
+	mov al,byte ptr n
+	mov bl,byte ptr m
+	dec bl
+	mul bl;rezultat je u ah:al
+	mov dx,ax
+	mov eax,0
+	petlja:
+		mov ebx,0
+		wile:
+			cmp ebx,edx
+			ja van
+			mov al,mat[ebx][esi]
+			add ebx,n
+		jmp wile
+	van:
+		inc esi
+	loop petlja
+	ret
+main endp
+end main
+; od dole do gore 
+.386
+.model flat,c
+.data
+	;smestanje kolona->kolona
+	mat byte 1,8,7
+		byte 2,11,9
+		byte 3,4,10
+		byte 5,6,12
+	n dword 3
+	m dword 4
+.stack 4096
+.code
+
+main proc
+
+	mov eax,0
+	mov ebx,0
+	mov edx,0
+	mov esi,n
+	dec esi
+	mov ecx,n
+	mov al,byte ptr n
+	mov bl,byte ptr m
+	dec bl
+	mul bl;rezultat je u ah:al
+	mov dx,ax
+	mov eax,0
+	petlja:
+		mov ebx,0
+		wile:
+			cmp ebx,edx
+			ja van
+			mov al,mat[ebx][esi]
+			add ebx,n
+		jmp wile
+	van:
+		dec esi
+	loop petlja
+	ret
+main endp
+end main

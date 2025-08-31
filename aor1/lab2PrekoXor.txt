@@ -1,0 +1,27 @@
+;(B1+1)*([B1*]-1) / (B1-B2^2/4) preko xor operacije za komplement polu bajtovima manje tezine
+mov ax,0ae34h
+mov bx,ax
+add ax,1
+mov pom1,ax
+mov ax,0
+adc ax,0
+shl eax,16
+mov ax,pom1
+xor bx,0x0f0f
+mul ebx
+mov pom2,eax
+mov eax,0179ABH
+mov ebx,eax
+mul ebx
+mov ecx,0x00000004
+; ovde treba koristiti rcx za deljenje rdx:rax sa rcx
+;rezutlat bi se smestio u rcx medjutim kompajler ne podrzava rad sa rcx zato koristimo manje brojeve i ecx
+;div rcx
+div ecx
+mov ebx,0xae34
+neg eax
+add ebx,eax
+mov eax,pom2
+mov edx,0
+idiv ebx
+; rezultat je u eax

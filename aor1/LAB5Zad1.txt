@@ -1,0 +1,43 @@
+.386
+.model flat,c
+.data
+	b dword 0abcdefabh
+	izlazPren db 0
+	izlazOsn dword 0
+.stack 4096
+.code
+	zbir proc
+		push ebp
+		mov ebp,esp
+		push ebx
+		push ecx
+		push edx
+		pushfd
+		mov ebx,[ebp+8]
+		mov ebx,[ebx]
+		add eax,ebx
+		mov edx,0
+		adc dl,0
+		mov byte ptr izlazPren,dl
+		mov dword ptr izlazOsn,eax
+		lea eax,izlazOsn
+		popfd
+		pop edx
+		pop ecx
+		pop ebx
+		pop ebp
+
+		ret 4
+	zbir endp
+	main proc
+		mov eax,0502931abh
+		lea ebx,b
+		push ebx
+		call zbir
+		mov edx,0
+		mov dl,byte ptr [eax-1];gornji 1 bit za prenos
+		mov eax,[eax];nizi 32 bita
+		;zbir dva broja je u dl:eax
+		ret
+	main endp
+	end main

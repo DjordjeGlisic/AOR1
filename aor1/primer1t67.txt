@@ -1,0 +1,21 @@
+;prebacuje svaku cifru u cetvrorobitni binarni broj i vrsi poredjenje bit po bit sa and operacijom
+;uzima cetvorocifren binarni broj i prebacuje ga u hexa cifru
+mov ax,0a5h
+and ax,01h
+; kada se upise dekadni broj od 0-15 on biva prebacen u jednu hexa cifru
+;to je cetvorocifren binarni broj koji se koristi za logicke operacije
+mov ax,0a5h
+and ax,11
+;dekadni broj se deljenjem sa 16
+;pamcenjem ostatka i od dole do gore citanjem ostatka
+;prebaci u hexa broj gde svaka cifra tog broja 
+;jeste cetvorocifren binarni broj
+mov ax,0a5h
+and ax,325
+;kada se zapise abch tada se taj broj;
+;posmatra kao a-1010 b-1011 c-1100
+; ceo broj je 101010111100 i ovo se koristi za poredjenje 2 broja
+; kljucno dek->hexa deljenjem sa 16
+; hexa->bin 1 hexa cifra=4 cifreni bin broj
+mov ax,0a5h
+and ax,11h

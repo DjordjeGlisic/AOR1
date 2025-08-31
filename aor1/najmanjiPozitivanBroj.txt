@@ -1,0 +1,23 @@
+mov ax,74
+mov bx,31
+mov cx,-2
+mov min,ax
+cmp bx,0
+jl drugi
+cmp bx,min
+jge drugi
+tad:
+mov min,bx
+jmp drugi
+drugi:
+cmp cx,0
+jl kraj
+
+cmp cx,min
+jge kraj
+tad2:
+mov min,cx
+jmp kraj
+kraj:
+mov ax,min
+

@@ -1,0 +1,79 @@
+; n-8bit
+mov n,2
+;a=(b+s)/c,a0=0
+mov a,0
+;b=b+1,b0=0
+mov b,0
+;i=1
+mov i,1
+;sum=0
+mov sum,0
+;k=0
+mov k,0
+shr n,1
+; gornja granica for petlje m=n/2
+mov cl,n
+mov m,cl
+mov cl,0
+for:
+mov cl,m
+cmp k,cl
+mov cl,0
+ja labelaC
+mov ax,sum
+mov bl,k
+add ax,bx
+mov bl,0
+mov sum,ax
+inc k
+jmp for
+labelaC:
+; vrati staru vrednost za n
+mov n,2
+; c=n na 4=>32 bita
+mov eax,0
+mov al,n
+mul n
+mov pom,ax
+mov ah,0
+mov al,n
+mul n
+mul pom
+; smestanje rez iz DX:AX u EAX
+mov pom,ax
+mov ax,dx
+shl ax,16
+mov ax,pom
+mov c,eax
+while:
+; u ax smesti a u bx smesti b
+; ispitaj dal je amodb==n
+mov ax,a
+mov bx,b
+cmp bx,0
+je racunaj
+div bl
+mov bl,n
+cmp dx,bx
+je kraj
+racunaj:
+;a=(b+sum)/c
+mov eax,0
+mov ax,b
+mov ebx,0
+mov bx,sum
+mov ecx,0
+mov ecx,c
+mov edx,0
+add ax,bx
+div ecx
+mov a,ax
+;b=b+1
+mov eax,0
+mov ax,b
+add ax,1
+mov b,ax
+jmp while
+kraj:
+mov ax,a
+mov bx,b

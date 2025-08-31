@@ -1,0 +1,31 @@
+;primer bx=8; f(ax>5){bx=7;} cx=9;
+mov bx,8
+mov ax,0x0005
+cmp ax,5
+jbe labela
+mov bx,7
+labela:
+primer
+	 if(ax>5)
+	{
+		bx=7;
+	}
+	else
+	{
+		bx=0;
+	}
+	cx=9;
+
+mov cx,9
+mov bx,8
+mov ax,114
+cmp ax,5
+jge else
+tad:
+mov bx,7
+jmp van
+else:
+mov bx,0
+jmp van
+van:
+mov cx,9

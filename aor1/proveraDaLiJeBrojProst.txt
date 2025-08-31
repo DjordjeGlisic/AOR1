@@ -1,0 +1,29 @@
+;n prost broj
+mov ax,05h
+mov n,ax
+;brojac krece od 2 i broji do n-1 (1 i n se ne racunaju)
+mov cx,2
+mov dx,ax
+dec dx
+mov m,dx
+for:
+cmp cx,m
+jg  kraj
+mov dx,0
+mov ax,n
+div cx
+cmp dx,0
+je set
+jmp ink
+set:
+mov ebx,1
+jmp kraj
+ink:
+inc cx
+jmp for
+kraj:
+mov ebx,eax
+
+
+
+

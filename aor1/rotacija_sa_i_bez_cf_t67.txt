@@ -1,0 +1,9 @@
+; primer: ispitati rad rol,ror,rcl,rcr operacije za 1 bit
+mov ax,0xafbc
+ror ax,1
+mov ax,0xafbc
+rol ax,1
+mov ax,0xafbc
+rcr ax,1
+mov ax,0xafbc
+rcl ax,1

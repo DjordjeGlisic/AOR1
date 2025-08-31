@@ -1,0 +1,53 @@
+.386
+.model flat,c
+.data
+	niz db 1,2,3,4,5
+	n db 5
+	nizUn dword 0
+	nUn db ?
+	;izgled memorije
+	;01 02 03 04 05 05,00 00 00 00 00 00 00 00 ?? ?? 
+.stack 4096
+.code
+	sumiraj proc
+		push ebx
+		push ecx
+		push edx
+		push esi
+		push edi
+		pushfd
+		mov nUn,al
+		mov nizUn,ebx
+		mov eax,0
+		mov ecx,0
+		mov cl,nUn
+		mov edx,0
+		petlja:
+			cmp al,nUn
+			jae van
+			add dl,byte ptr [ebx+eax]
+			adc dh,0
+			inc eax
+		loop petlja
+		van:
+		mov eax,edx
+		popfd
+		pop edi
+		pop esi
+		pop  edx
+		pop ecx
+		pop ebx
+		ret
+	sumiraj endp
+
+	main proc
+		mov eax,0
+		mov al,n
+		mov ebx,0
+		mov ebx,offset niz
+		call sumiraj
+		;suma se nalazi u eax
+
+		ret
+	main endp
+	end main

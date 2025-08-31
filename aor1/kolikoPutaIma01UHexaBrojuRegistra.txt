@@ -1,0 +1,21 @@
+;dat je podatak i treba mu izbrojati broj parova 01 uzastopnih
+mov ax,0xafd7
+mov bx,ax
+while:
+cmp ax,0
+je kraj
+mov dx,ax
+and dx,0x0003
+cmp dx,0x0001
+jne dalje
+inc cx
+dalje:
+shr ax,1
+jmp while
+kraj:
+and bx,0x8000
+cmp bx,8000h
+jne stampaj
+dec cx
+stampaj:
+mov eax,ecx

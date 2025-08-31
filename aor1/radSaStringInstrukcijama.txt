@@ -1,0 +1,51 @@
+.386
+.model flat,c
+.data
+	x dword 0a5b7c4d5h
+	a db 7h
+	b db 0afh
+	y dword 0b1b70003h
+	;izgled memorije d5 c4 b7 a5 07 af b5 b4 00 03
+	niz dw 5 DUP(0)
+	duplikat dw 0a734h,0a5b7h,0aabbh,0b4b5h,0b1b7h
+.code
+	main proc
+		mov eax,0
+		mov al,3h
+		mov ecx,5
+		lea esi,x
+		lea edi,niz
+		mov ebx,0
+		inicijalizacija:
+			mov dx,[esi+ebx]
+			mov niz[ebx],dx
+			add ebx,2
+			;niz c4 d5,a5 b7, af 07, b4 b5,b1 b7
+		loop inicijalizacija
+		mov ecx,5
+		mov ax,0abcdh
+		lea edi,niz
+		;rep stosw sadrzaj ax kopira na sve elemente niza
+		;stosw sadrzaj ax kopira na element niza na koji ukazuje edi
+		;rep lodsw kopira svaki element niza u ax tako da ce u ax biti nakon ove naredbe poslednji element niza
+		;lodsw kopira element niza u ax na koji ukazuje sadrzaj EDI
+		lea edi,duplikat
+		lea esi,niz
+		;movsw; kopira word onoga sto na sta ukazuje adresa u esi na ono na sta ukazuje adresa iz edi
+		;rep movsw; kopira word svakog element niza iz jedne adrese(iz esi) u element niza na drugoj adresi(edi)
+		;cmpsw; poredi element niza na koji ukazuje ESI sa elementom niza na koji ukazuje element ESI
+		repne cmpsw; poredi element po element niza na koji ukazuje EDI sa elemntom po element niza na koji ukazuje ESI dok zf=0
+		jz naso
+		jnz nijeNaso
+		naso:
+			stc
+			jmp kraj
+		nijeNaso:
+			clc
+			jmp kraj
+		kraj:
+		ret
+	main endp
+	end main
+	
+	

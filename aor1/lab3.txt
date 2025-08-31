@@ -1,0 +1,28 @@
+mov a,4
+mov i,2
+while:
+cmp i,0
+jbe kraj
+mov ah,0
+mov al,a
+mov bl,2
+div bl
+cmp ah,0
+jne kraj
+mov al,a
+add al,i
+mov a,al
+mov al,i
+div bl
+cmp ah,2
+jne povecaj
+dec i
+jmp while
+povecaj:
+inc i
+jmp while
+kraj:
+inc i
+mov ah,0
+mov al,i
+mov bl,a

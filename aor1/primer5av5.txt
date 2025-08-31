@@ -1,0 +1,10 @@
+mov al,0xb1
+movzx eax,ax
+mov bl,0xb2
+add bl,1
+movzx ebx,bx
+mul ebx
+mov cx,122h
+movzx ecx,cx
+add ecx,0xb1
+div ecx

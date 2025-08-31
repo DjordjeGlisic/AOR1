@@ -1,0 +1,25 @@
+mov al,0xb1
+mov bl,10h
+; mul ovde daje tacan rezultat 0b10 a imul daje fb10
+imul bl
+
+add al,0xb2
+adc ah,0
+mov pom1,ax
+mov eax,0
+mov al,0xb1
+
+sub al,18h
+mov bl,0xb2
+sub bl,1
+div bx
+mov pom2,ax
+mov eax,0
+mov edx,0
+mov ax,pom1
+
+; deljenje sa ffff neobelezeno daje 0
+div pom2
+
+
+

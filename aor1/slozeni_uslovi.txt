@@ -1,0 +1,34 @@
+primer
+if((ax>0&&bx<5)||(cx==7&&dx<3))
+{
+	ax=3;
+	cx=011h;
+}
+else
+{
+	ax=0;
+	cx=022h;
+}
+
+mov ax,1
+mov bx,4
+mov cx,7
+mov dx,2
+cmp ax,0
+jle else
+cmp bx,5
+jge else
+jmp tad
+cmp cx,7
+jne else
+cmp dx,3
+jge else
+jmp tad
+tad:
+mov ax,3
+mov cx,011h
+jmp kraj
+else:
+mov ax,0
+mov cx,022h
+kraj:

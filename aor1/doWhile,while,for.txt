@@ -1,0 +1,27 @@
+;primer do-while petlje
+mov ax,0x0000
+do:
+inc ax
+cmp ax,5
+jb do
+mov ebx,0x00000008
+;primer while petlje
+mov ax,0
+while:
+cmp ax,5
+jge van
+inc ax
+jmp while
+van:
+mov ebx,8
+;primer for petlje
+mov ax,0
+mov cl,0
+for:
+cmp cl,0x0a
+je vanF
+inc ax
+inc cl
+jmp for
+vanF:
+mov ebx,8

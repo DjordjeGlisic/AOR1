@@ -1,0 +1,12 @@
+mov ax,0xb1
+mov bx,0x0003
+mul bx
+mov bx,0x00b2
+div bx
+mov pom1,ax
+mov ax,0x00b2
+mov bx,0x00b1
+;imamo ostatak u edx koji treba ocistiti
+mov edx,0
+div bx
+mul pom1

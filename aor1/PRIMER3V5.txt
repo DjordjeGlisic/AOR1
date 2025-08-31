@@ -1,0 +1,11 @@
+mov eax,0
+mov eax,y
+mov ecx,0
+mov ecx,5
+mul ecx
+mov ecx,3
+mov ebx,z
+sub ebx,ecx
+add eax,ebx
+adc edx,0
+
