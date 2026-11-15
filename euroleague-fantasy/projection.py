@@ -110,6 +110,23 @@ def lineup_str(keys):
             + ", ".join(f"{p['pos']} {p['name']}{' (C)' if p is cap else ''}" for p in sorted(s5, key=lambda p: 'GFC'.index(p['pos'])))
             + f" | 6.: {s6['pos']} {s6['name']} | klupa: " + ", ".join(p["name"] for p in bench))
 
+
+def formation_table(keys):
+    pl = [P[k] for k in keys]; val = {p["key"]: p["proj"] for p in pl}
+    out = []
+    global FORMATIONS
+    allf = FORMATIONS
+    for f in allf:
+        FORMATIONS = [f]
+        v, s5, s6, cap, _ = best_lineup(pl, val)
+        out.append((v, f, s5, s6))
+    FORMATIONS = allf
+    out.sort(key=lambda x: -x[0])
+    for v, f, s5, s6 in out:
+        if s5 is None:
+            print(f"     {f[0]}-{f[1]}-{f[2]}: nije moguca"); continue
+        print(f"     {f[0]}-{f[1]}-{f[2]}: {v:6.1f} FP  ({', '.join(p['name'] for p in s5)} | 6.: {s6['name']})")
+
 # ---------- tabela
 print(f"{'igrac':<17}{'tim':<5}{'poz':<4}{'T':<3}{'cr':>6}{'proj':>7}{'proj/cr':>8}  sledeci  napomena")
 for r in sorted(rows, key=lambda x: -x["proj"]):
@@ -151,3 +168,7 @@ for k in sorted(res)[1:]:
 t2 = [r["name"] for r in rows if r["turn"] == 2]
 print("\nIgraci u T2: " + (", ".join(t2) if t2 else
       "NEMA - svi timovi iz baze (OLY, RED, HTA, BAY, MIL) igraju T1 u ovom kolu, pa T2 zamene nisu moguce."))
+
+_, rbest, _ = res[min(2, max(res))]
+print("\nPOREDJENJE FORMACIJA za tim sa 2 trejda (projekcija):")
+formation_table([p["key"] for p in rbest])
