@@ -1,25 +1,25 @@
-name,team,pos,credits,credits_known,season_pir,recent_pir,prior_pir,role,mine,note
-Vezenkov,OLY,F,19.2,1,21,23,19,1.00,1,20+ FP u svakoj od posl. 6 utakmica
-Bryant,HTA,G,17.6,1,17,14,15,0.95,1,14.8p 5.4r 3.9a 28.6min; R11 12p5r5a; Hapoel prenatrpan
-Miller-McIntyre,OLY,G,10.3,1,8.7,11,15,0.90,1,PIR 8.7 (10 ut) 22min sa klupe; R11 10p 7a
-Washington,BAY,G,9.5,1,12,12,11,0.95,1,15 ppg 20min; malo skokova
-Diop,MIL,C,4.8,1,7,12,6,0.85,1,18 FP vs VAL dok je Booker povredjen
-Koloko,RED,C,9.8,1,10.8,10.8,10,0.90,1,PIR 10.8 (4 ut) 16.5min; top odbrana
-Davidovac,RED,F,4.8,1,4.8,4.8,5,0.80,1,nema podataka - procena = cena
-Nedeljkovic,RED,F,4.0,1,4.0,4.0,4,0.80,1,nema podataka - procena = cena
-Djurisic,RED,G,4.0,1,4.0,4.0,4,0.80,1,nema podataka - procena = cena
-Dobric,RED,F,4.8,1,4.8,4.8,5,0.80,1,nema podataka - procena = cena
-Fournier,OLY,G,9.3,1,9.2,14,12,0.90,0,R11 PIR 28 (30.8 FP); vratio se posle povrede; R6 -3.6
-Micic,HTA,G,12.5,0,12.3,16,13,0.95,0,PIR 12.3 (9 ut); 18.3 poena posl. 3 utakmice
-Oturu,HTA,C,14.0,1,14.0,19,14,0.95,0,PIR 14.0; posl. 3 PIR 21; R11 13p 8r
-Nwora,RED,F,14.0,0,15.4,15,15,1.00,0,PIR 15.4 (11 ut) 14.7p 5.4r
-Moneke,RED,F,14.1,1,11,10,19,0.80,0,smanjena uloga; cena pala na 14.1
-Butler,RED,G,9.5,0,9,6,9,0.85,0,R11 karijerni minimum -6.0
-Ward,OLY,F,8.5,1,9,11,8,0.90,0,R10 value pick 8.5 cr
-Thiemann,BAY,F,11.5,1,10,10,10,0.90,0,R5 cena 11.5; solidan
-Wiley,BAY,C,10.1,1,10,10,8,0.85,0,R6 cena 10.1; trener mu sve vise veruje
-Wright,MIL,C,14.0,1,13,13,13,0.95,0,premium centar Milana
-Milutinov,OLY,C,10.0,0,9.1,9.1,18,0.80,0,PIR pao na 9.1 - razocaranje
-Bolmaro,MIL,F,7.5,0,7.6,7.6,7,0.90,0,PIR 7.6
-Papanikolaou,OLY,F,4.4,1,4.5,4.5,4,0.75,0,jeftin, minuta ima
-Ricci,MIL,F,4.5,1,4.5,4.5,4,0.75,0,jeftin bench forward
+name,team,pos,credits,credits_known,season_pir,recent_pir,prior_pir,role,mine,note,turn
+Vezenkov,OLY,F,19.2,1,21,23,19,1.00,1,20+ FP u svakoj od posl. 6 utakmica,1
+Bryant,HTA,G,17.6,1,17,14,15,0.95,1,14.8p 5.4r 3.9a 28.6min; R11 12p5r5a; Hapoel prenatrpan,1
+Miller-McIntyre,OLY,G,10.3,1,8.7,11,15,0.90,1,PIR 8.7 (10 ut) 22min sa klupe; R11 10p 7a,1
+Washington,BAY,G,9.5,1,12,12,11,0.95,1,15 ppg 20min; malo skokova,1
+Diop,MIL,C,4.8,1,7,12,6,0.85,1,18 FP vs VAL dok je Booker povredjen,1
+Koloko,RED,C,9.8,1,10.8,10.8,10,0.90,1,PIR 10.8 (4 ut) 16.5min; top odbrana,1
+Davidovac,RED,F,4.8,1,4.8,4.8,5,0.80,1,nema podataka - procena = cena,1
+Nedeljkovic,RED,F,4.0,1,4.0,4.0,4,0.80,1,nema podataka - procena = cena,1
+Djurisic,RED,G,4.0,1,4.0,4.0,4,0.80,1,nema podataka - procena = cena,1
+Dobric,RED,F,4.8,1,4.8,4.8,5,0.80,1,nema podataka - procena = cena,1
+Fournier,OLY,G,9.3,1,9.2,14,12,0.90,0,R11 PIR 28 (30.8 FP); vratio se posle povrede; R6 -3.6,1
+Micic,HTA,G,12.5,0,12.3,16,13,0.95,0,PIR 12.3 (9 ut); 18.3 poena posl. 3 utakmice,1
+Oturu,HTA,C,14.0,1,14.0,19,14,0.95,0,PIR 14.0; posl. 3 PIR 21; R11 13p 8r,1
+Nwora,RED,F,14.0,0,15.4,15,15,1.00,0,PIR 15.4 (11 ut) 14.7p 5.4r,1
+Moneke,RED,F,14.1,1,11,10,19,0.80,0,smanjena uloga; cena pala na 14.1,1
+Butler,RED,G,9.5,0,9,6,9,0.85,0,R11 karijerni minimum -6.0,1
+Ward,OLY,F,8.5,1,9,11,8,0.90,0,R10 value pick 8.5 cr,1
+Thiemann,BAY,F,11.5,1,10,10,10,0.90,0,R5 cena 11.5; solidan,1
+Wiley,BAY,C,10.1,1,10,10,8,0.85,0,R6 cena 10.1; trener mu sve vise veruje,1
+Wright,MIL,C,14.0,1,13,13,13,0.95,0,premium centar Milana,1
+Milutinov,OLY,C,10.0,0,9.1,9.1,18,0.80,0,PIR pao na 9.1 - razocaranje,1
+Bolmaro,MIL,F,7.5,0,7.6,7.6,7,0.90,0,PIR 7.6,1
+Papanikolaou,OLY,F,4.4,1,4.5,4.5,4,0.75,0,jeftin - minuta ima,1
+Ricci,MIL,F,4.5,1,4.5,4.5,4,0.75,0,jeftin bench forward,1
