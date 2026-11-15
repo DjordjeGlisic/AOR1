@@ -12,6 +12,7 @@ Vrednost tima (Monte Carlo, 4000 simulacija):
 Pokretanje:  python projection.py [--spare 2.1]
 """
 import argparse, csv, os, random, sys
+from itertools import combinations
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fantasy_trades import best_trades
 
@@ -21,6 +22,7 @@ ap.add_argument("--budget", type=float, default=98.0)
 ap.add_argument("--spare", type=float, default=2.1, help="slobodni krediti sada")
 ap.add_argument("--max-trades", type=int, default=4)
 ap.add_argument("--sims", type=int, default=4000)
+ap.add_argument("--cap", type=float, default=2.0, help="mnozilac kapitena (2.0 ili 1.5)")
 args = ap.parse_args()
 
 # protivnik u 12. kolu (screenshot): domacin +4%, gost -2..-4%, jak protivnik dodatno
@@ -42,44 +44,71 @@ for r in csv.DictReader(open(args.data)):
     rows.append(r)
 P = {r["key"]: r for r in rows}
 
-def det_value(roster, proj):
-    v = sorted((proj[p["key"]] for p in roster), reverse=True)
-    return v[0] * 2 + sum(v[1:6]) + 0.5 * sum(v[6:])
+FORMATIONS = [(2, 2, 1), (1, 2, 2), (2, 1, 2), (1, 3, 1), (3, 1, 1)]  # G-F-C startne petorke
+CAP = args.cap
 
-def mc_value(keys, sims=args.sims, seed=7):
-    """Ocekivani poeni sa optimalnim izborom: startnih 6, kapiten, zamene u pauzi T1->T2."""
+def best_lineup(pl, val, fixed_bench=frozenset(), cap_pool=None):
+    """Optimalna postava: petorka u dozvoljenoj formaciji + 6. igrac (bilo koja poz.) + kapiten iz petorke.
+    pl: lista igraca; val: key->poeni; fixed_bench: ne smeju u start/6.;
+    cap_pool: dozvoljeni kapiteni (None = bilo ko iz petorke). Vraca (vrednost, petorka, sesti, kapiten, formacija)."""
+    best = (-1e9, None, None, None, None)
+    elig = [p for p in pl if p["key"] not in fixed_bench]
+    for combo in combinations(elig, 5):
+        g = sum(p["pos"] == "G" for p in combo); f = sum(p["pos"] == "F" for p in combo)
+        form = (g, f, 5 - g - f)
+        if form not in FORMATIONS:
+            continue
+        rest = [p for p in elig if p not in combo]
+        sixth = max(rest, key=lambda p: val[p["key"]]) if rest else None
+        caps = [p for p in combo if cap_pool is None or p["key"] in cap_pool]
+        if not caps:
+            continue
+        cap = max(caps, key=lambda p: val[p["key"]])
+        bench = [p for p in pl if p not in combo and p is not sixth]
+        v = (sum(val[p["key"]] for p in combo) + (CAP - 1) * val[cap["key"]]
+             + (val[sixth["key"]] if sixth else 0) + 0.5 * sum(val[p["key"]] for p in bench))
+        if v > best[0]:
+            best = (v, combo, sixth, cap, form)
+    return best
+
+def det_value(roster, proj):
+    return best_lineup([P[p["key"]] for p in roster], proj)[0]
+
+def mc_value(keys, sims=None, seed=7):
+    """Monte Carlo: postava pre kola po projekciji; u pauzi T1->T2 re-optimizacija
+    (formacija, kapiten, ulazak T2 igraca sa klupe; T1 igraci sa klupe ostaju na klupi)."""
+    sims = sims or args.sims
     rnd = random.Random(seed)
     pl = [P[k] for k in keys]
-    # pre kola: 6 startera = najveca projekcija; kapiten = najveca projekcija
-    order = sorted(pl, key=lambda p: -p["proj"])
-    start, bench = order[:6], order[6:]
-    cap = order[0]
+    proj0 = {p["key"]: p["proj"] for p in pl}
+    _, start5, sixth, cap, _ = best_lineup(pl, proj0)
+    starters = {p["key"] for p in start5} | ({sixth["key"]} if sixth else set())
+    has_t2 = any(p["turn"] == 2 for p in pl)
     total = 0.0
     for _ in range(sims):
         sc = {p["key"]: rnd.gauss(p["proj"], 0.45 * p["proj"] + 3) for p in pl}
-        s, b = list(start), list(bench)
-        # pauza: T1 starteri su odigrali; T2 igraci sa klupe mogu da udju
-        t2_bench = sorted([p for p in b if p["turn"] == 2], key=lambda p: -p["proj"])
-        for inn in t2_bench:
-            played = [p for p in s if p["turn"] == 1 and p is not cap]
-            if not played:
-                break
-            worst = min(played, key=lambda p: sc[p["key"]])
-            # menjaj ako ocekivani dobitak > 0: (proj_in - sc_worst) - 0.5*(proj_in - sc_worst) ...
-            # startni slot 100% vs klupa 50%: dobitak = 0.5*proj_in - 0.5*sc_worst
-            if inn["proj"] > sc[worst["key"]]:
-                s.remove(worst); b.append(worst); b.remove(inn); s.append(inn)
-        # kapiten: ako je T1 kapiten podbacio, a postoji T2 starter, kapiten moze preci na njega
-        c = cap
-        if cap["turn"] == 1:
-            t2s = [p for p in s if p["turn"] == 2]
-            if t2s:
-                best2 = max(t2s, key=lambda p: p["proj"])
-                if best2["proj"] > sc[cap["key"]]:
-                    c = best2
-        tot = sum(sc[p["key"]] for p in s) + 0.5 * sum(sc[p["key"]] for p in b) + sc[c["key"]]
-        total += tot
+        if not has_t2:
+            v = (sum(sc[k] for k in starters) + 0.5 * sum(sc[p["key"]] for p in pl if p["key"] not in starters)
+                 + (CAP - 1) * sc[cap["key"]])
+        else:
+            # pauza: T1 rezultati poznati, T2 ocekivani
+            known = {p["key"]: (sc[p["key"]] if p["turn"] == 1 else p["proj"]) for p in pl}
+            fixed = frozenset(p["key"] for p in pl if p["turn"] == 1 and p["key"] not in starters)
+            cap_pool = {p["key"] for p in pl if p["turn"] == 2} | {cap["key"]}
+            _, s5, s6, c, _ = best_lineup(pl, known, fixed, cap_pool)
+            on = {p["key"] for p in s5} | ({s6["key"]} if s6 else set())
+            v = (sum(sc[k] for k in on) + 0.5 * sum(sc[p["key"]] for p in pl if p["key"] not in on)
+                 + (CAP - 1) * sc[c["key"]])
+        total += v
     return total / sims
+
+def lineup_str(keys):
+    pl = [P[k] for k in keys]
+    _, s5, s6, cap, form = best_lineup(pl, {p["key"]: p["proj"] for p in pl})
+    bench = [p for p in pl if p not in s5 and p is not s6]
+    return (f"formacija {form[0]}-{form[1]}-{form[2]} | start: "
+            + ", ".join(f"{p['pos']} {p['name']}{' (C)' if p is cap else ''}" for p in sorted(s5, key=lambda p: 'GFC'.index(p['pos'])))
+            + f" | 6.: {s6['pos']} {s6['name']} | klupa: " + ", ".join(p["name"] for p in bench))
 
 # ---------- tabela
 print(f"{'igrac':<17}{'tim':<5}{'poz':<4}{'T':<3}{'cr':>6}{'proj':>7}{'proj/cr':>8}  sledeci  napomena")
@@ -96,6 +125,7 @@ spent_players = sum(p["credits"] for p in roster)
 hc = args.budget - args.spare - spent_players  # trener + ostalo
 base_mc = mc_value([p["key"] for p in roster])
 print(f"\nSlobodno: {args.spare:.1f} cr | trenutni tim (Monte Carlo): {base_mc:.1f} FP")
+print("   " + lineup_str([p["key"] for p in roster]))
 
 import fantasy_trades as ft
 ft.team_value = det_value  # isto pravilo kao gore
@@ -116,9 +146,7 @@ for k in sorted(res)[1:]:
     for o, i in moves:
         print(f"   OUT {o['pos']} {o['name']:<16}{o['credits']:>5} cr ({proj[o['key']]:.1f}, T{P[o['key']]['turn']})"
               f"  ->  IN {i['name']:<13}{i['credits']:>5} cr ({proj[i['key']]:.1f}, T{P[i['key']]['turn']})")
-    order = sorted(r, key=lambda p: -proj[p["key"]])
-    print("   start: " + ", ".join(f"{p['name']}{' (C)' if j==0 else ''}" for j, p in enumerate(order[:6]))
-          + " | klupa: " + ", ".join(p["name"] for p in order[6:]))
+    print("   " + lineup_str([p["key"] for p in r]))
 
 t2 = [r["name"] for r in rows if r["turn"] == 2]
 print("\nIgraci u T2: " + (", ".join(t2) if t2 else
