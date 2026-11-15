@@ -1,0 +1,21 @@
+{
+  "season": 2026,
+  "next_round": 12,
+  "budget": 98.0,
+  "max_trades": 4,
+  "allowed_teams": ["OLY", "RED", "CZV", "HTA", "MUN", "BAY", "MIL", "MCO"],
+  "allowed_team_name_keywords": ["OLYMPIACOS", "ZVEZDA", "HAPOEL", "BAYERN", "MILAN", "MONACO"],
+  "head_coach": {"name": "Albert", "credits": 8.3},
+  "players": [
+    {"name": "Diop",            "pos": "C", "credits": 4.8,  "slot": "starter"},
+    {"name": "Vezenkov",        "pos": "F", "credits": 19.2, "slot": "starter", "captain": true},
+    {"name": "Bryant",          "pos": "G", "credits": 17.6, "slot": "starter"},
+    {"name": "Miller-McIntyre", "pos": "G", "credits": 10.3, "slot": "starter"},
+    {"name": "Washington",      "pos": "G", "credits": 9.5,  "slot": "starter"},
+    {"name": "Koloko",          "pos": "C", "credits": 9.8,  "slot": "sixth"},
+    {"name": "Davidovac",       "pos": "F", "credits": 4.8,  "slot": "bench"},
+    {"name": "Nedeljkovic",     "pos": "F", "credits": 4.0,  "slot": "bench"},
+    {"name": "Djurisic",        "pos": "G", "credits": 4.0,  "slot": "bench"},
+    {"name": "Dobric",          "pos": "F", "credits": 4.8,  "slot": "bench"}
+  ]
+}
