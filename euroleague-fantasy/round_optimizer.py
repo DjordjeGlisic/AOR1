@@ -94,11 +94,24 @@ def det_value(names):
     return best_lineup(names, {n: P[n]["proj"] for n in names})[0]
 
 
-def mc_value(names, sims, seed=11):
-    """Ocekivani poeni sa korelacijom saigraca i re-optimizacijom postave u pauzi T1->T2."""
-    rnd = random.Random(seed)
+def initial_lineup(names, strategy):
+    """'proj' = najjaca postava po projekciji; 't1first' = T1 igraci u start, T2 na klupu (max fleksibilnost)."""
     proj0 = {n: P[n]["proj"] for n in names}
-    _, five, sixth, cap, _ = best_lineup(names, proj0)
+    if strategy == "t1first":
+        val = {n: proj0[n] + (1000 if P[n]["turn"] == 1 else 0) for n in names}
+        return best_lineup(names, val)
+    return best_lineup(names, proj0)
+
+
+def mc_value(names, sims, seed=11, strategy=None):
+    """Ocekivani poeni sa korelacijom saigraca i re-optimizacijom postave u pauzi T1->T2.
+    strategy=None -> isprobaj obe strategije postave i vrati bolju."""
+    if strategy is None:
+        a = mc_value(names, sims, seed, "proj")
+        b = mc_value(names, sims, seed, "t1first")
+        return a if a[0] >= b[0] else b
+    rnd = random.Random(seed)
+    _, five, sixth, cap, _ = initial_lineup(names, strategy)
     starters = set(five) | ({sixth} if sixth else set())
     teams = {P[n]["team"] for n in names}
     has_t2 = any(P[n]["turn"] == 2 for n in names)
@@ -119,7 +132,7 @@ def mc_value(names, sims, seed=11):
         tot += v
         vals.append(v)
     vals.sort()
-    return tot / sims, vals
+    return tot / sims, vals, strategy
 
 
 # ------------------------------------------------------------------ pretraga trejdova
@@ -157,7 +170,7 @@ for depth in range(cfg["max_trades"]):
 screen = sorted(pool.values(), key=lambda x: -x[0])[:80]
 scored = []
 for det, roster, moves in screen:
-    m, _ = mc_value(list(roster), args.screen_sims)
+    m = mc_value(list(roster), args.screen_sims)[0]
     scored.append((m - 0.15 * len(moves), m, det, roster, moves))  # mala kazna za suvisne trejdove
 scored.sort(key=lambda x: -x[0])
 
@@ -185,9 +198,9 @@ for r in sorted(P.values(), key=lambda r: -r["proj"]):
 
 
 def show(title, roster, moves, sims):
-    m, vals = mc_value(list(roster), sims)
+    m, vals, strat = mc_value(list(roster), sims)
     q = lambda p: vals[int(p * (len(vals) - 1))]
-    _, five, sixth, cap, form = best_lineup(list(roster), {n: P[n]["proj"] for n in roster})
+    _, five, sixth, cap, form = initial_lineup(list(roster), strat)
     bench = [n for n in roster if n not in five and n != sixth]
     t1 = sum(P[n]["turn"] == 1 for n in roster)
     print(f"\n=== {title} ===")
@@ -200,7 +213,7 @@ def show(title, roster, moves, sims):
             print(f"   OUT {P[o]['pos']} {o:<14}{P[o]['credits']:>5} ({P[o]['proj']:.1f}, T{P[o]['turn']})  ->  "
                   f"IN {i:<14}{P[i]['credits']:>5} ({P[i]['proj']:.1f}, T{P[i]['turn']})")
     fmt = lambda n: f"{P[n]['pos']} {n} (T{P[n]['turn']}, {P[n]['proj']:.1f})"
-    print(f"formacija {form[0]}-{form[1]}-{form[2]}")
+    print(f"formacija {form[0]}-{form[1]}-{form[2]} | strategija: " + ("T1 u start, T2 na klupu (zamene u pauzi)" if strat == "t1first" else "najjaca postava po projekciji"))
     print("   petorka: " + ", ".join(fmt(n) + (" [KAPITEN]" if n == cap else "") for n in sorted(five, key=lambda n: "GFC".index(P[n]["pos"]))))
     print("   6.:      " + fmt(sixth))
     print("   klupa:   " + ", ".join(fmt(n) for n in sorted(bench, key=lambda n: -P[n]["proj"])))

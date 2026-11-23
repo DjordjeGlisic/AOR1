@@ -2,8 +2,8 @@
   "round": 14,
   "budget": 101.0,
   "spare": 0.0,
-  "head_coach_credits": 8.3,
-  "max_trades": 11,
+  "head_coach_credits": 6.8,
+  "max_trades": 3,
   "captain_multiplier": 2.0,
   "_fixtures_note": "turn 1 = utorak 24.11, turn 2 = sreda 25.11; win = verovatnoca pobede iz kladionicarskih kvota (1/kvota, normalizovano)",
   "fixtures": {
