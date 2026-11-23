@@ -1,0 +1,18 @@
+{
+  "round": 14,
+  "budget": 101.0,
+  "spare": 0.0,
+  "head_coach_credits": 8.3,
+  "max_trades": 11,
+  "captain_multiplier": 2.0,
+  "_fixtures_note": "turn 1 = utorak 24.11, turn 2 = sreda 25.11; win = verovatnoca pobede iz kladionicarskih kvota (1/kvota, normalizovano)",
+  "fixtures": {
+    "BAY": {"opp": "vs MTA", "turn": 1, "home": true,  "win": 0.58},
+    "RED": {"opp": "vs VIR", "turn": 1, "home": true,  "win": 0.65},
+    "MIL": {"opp": "@ ASV",  "turn": 1, "home": false, "win": 0.60},
+    "OLY": {"opp": "vs HTA", "turn": 2, "home": true,  "win": 0.68},
+    "HTA": {"opp": "@ OLY",  "turn": 2, "home": false, "win": 0.32},
+    "RMB": {"opp": "vs ZAL", "turn": 2, "home": true,  "win": 0.67},
+    "BAS": {"opp": "vs EFE", "turn": 2, "home": true,  "win": 0.38}
+  }
+}
